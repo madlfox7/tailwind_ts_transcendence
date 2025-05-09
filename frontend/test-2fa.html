@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>2FA + JWT Test</title>
+</head>
+<body>
+  <h2>1. Login</h2>
+  <input id="username" placeholder="Username"><br>
+  <input id="password" type="password" placeholder="Password"><br>
+  <button onclick="login()">Login</button>
+  <pre id="loginResult"></pre>
+
+  <h2>2. Setup 2FA</h2>
+  <button onclick="setup2FA()">Generate QR Code</button>
+  <pre id="setupResult"></pre>
+  <img id="qrCode" style="display:none; max-width: 200px;"><br>
+
+  <h2>3. Enable 2FA</h2>
+  <input id="setupCode" placeholder="Enter code from app"><br>
+  <button onclick="enable2FA()">Enable 2FA</button>
+  <pre id="enableResult"></pre>
+
+  <h2>4. Verify 2FA (Login Step 2)</h2>
+  <input id="verifyCode" placeholder="Enter code from app"><br>
+  <button onclick="verify2FA()">Verify & Get Token</button>
+  <pre id="verifyResult"></pre>
+
+  <h2>5. Access Protected /api/profile</h2>
+  <button onclick="getProfile()">Get Profile</button>
+  <pre id="profileResult"></pre>
+
+  <script>
+    let tempToken = '';
+    let finalToken = '';
+
+    async function login() {
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      });
+      const data = await res.json();
+      document.getElementById('loginResult').textContent = JSON.stringify(data, null, 2);
+
+      if (data.temp_token) tempToken = data.temp_token;
+      if (data.token) finalToken = data.token;
+    }
+
+    async function setup2FA() {
+      const res = await fetch('/api/setup-2fa', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token: finalToken || tempToken })
+      });
+      const data = await res.json();
+      document.getElementById('setupResult').textContent = JSON.stringify(data, null, 2);
+      if (data.qrCode) {
+        const img = document.getElementById('qrCode');
+        img.src = data.qrCode;
+        img.style.display = 'block';
+      }
+    }
+
+    async function enable2FA() {
+      const code = document.getElementById('setupCode').value;
+      const res = await fetch('/api/enable-2fa', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token: finalToken || tempToken, code })
+      });
+      const data = await res.json();
+      document.getElementById('enableResult').textContent = JSON.stringify(data, null, 2);
+    }
+
+    async function verify2FA() {
+    const code = document.getElementById('verifyCode').value;
+
+    console.log('[VERIFY 2FA] Sending token:', tempToken);
+    console.log('[VERIFY 2FA] Sending code:', code);
+
+    const res = await fetch('/api/verify-2fa', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        temp_token: tempToken,
+        code: code
+      })
+    });
+
+    const data = await res.json();
+    console.log('[VERIFY 2FA] Server response:', data);
+    document.getElementById('verifyResult').textContent = JSON.stringify(data, null, 2);
+
+    if (data.token) {
+      finalToken = data.token;
+      console.log('[VERIFY 2FA] Final JWT received:', finalToken);
+    }
+  }
+
+    async function getProfile() {
+    const res = await fetch('/api/profile', {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer ' + finalToken
+      }
+    });
+    const data = await res.json();
+    document.getElementById('profileResult').textContent = JSON.stringify(data, null, 2);
+  }
+
+  
+  </script>
+</body>
+</html>

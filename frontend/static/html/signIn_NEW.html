@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="full-height d-flex flex-column align-items-center justify-content-center">
+	<form class="container glass container-login p-5">
+		<div class="row justify-content-center mb-2">
+			<div class="col-12 text-center">
+				<p class="text-white h1" animated-letters data-translate="login">login</p>
+			</div>
+		</div>
+		<div class="row justify-content-center mb-4">
+			<div class="col-12 text-left">
+				<hr class="text-white">
+			</div>
+		</div>
+		<div class="row justify-content-center mb-3">
+			<div class="col-12 text-left">
+				<label for="username" class="text-white" data-translate="username">username:</label>
+				<input type="text" class="form-control text-center text-input" id="username" maxlength="15">
+				<small class="text-danger" id="username-error">&nbsp;</small>
+			</div>
+		</div>
+		<div class="row justify-content-center mb-3">
+			<div class="col-12 text-left">
+				<label for="password" class="text-white" data-translate="password">password:</label>
+				<input type="password" class="form-control text-center text-input" id="password" maxlength="64">
+				<small class="text-danger" id="password-error">&nbsp;</small>
+			</div>
+		</div>
+
+		<!-- 2FA Section (initially hidden) -->
+		<div class="row justify-content-center mb-3 d-none" id="twofa-section">
+			<div class="col-12 text-left">
+				<label for="twofa-code" class="text-white">2FA Code:</label>
+				<input type="text" class="form-control text-center text-input" id="twofa-code" maxlength="6">
+				<small class="text-danger" id="twofa-error">&nbsp;</small>
+			</div>
+		</div>
+
+		<div class="row justify-content-center mt-4">
+			<div class="col-12 text-center">
+				<button class="btn btn-lg text-light btn-filled" id="sign-in-button" data-translate="login">login</button>
+			</div>
+		</div>
+		<div class="row justify-content-center mt-4">
+			<div class="col-12 text-center">
+				<small class="light-text" data-translate="no account">no account?</small>
+				<small> <a href="/signup" class="text-light sign" data-link data-translate="sign up">sign up</a></small>
+			</div>
+		</div>
+	</form>
+
+	<a role="button" class="return-btn btn btn-lg text-light text-center d-flex align-items-center justify-content-center p-3 mt-5" href="/" data-link>
+		<img src="static/assets/UI/icons/left_arrow.svg" alt="return button" id="left-arrow">
+	</a>
+</div>
+
+<script>
+	let tempToken = '';
+	let finalToken = '';
+
+	document.getElementById('sign-in-button').addEventListener('click', async (e) => {
+		e.preventDefault();
+
+		const username = document.getElementById('username').value;
+		const password = document.getElementById('password').value;
+		const code = document.getElementById('twofa-code').value;
+
+		if (!tempToken) {
+			// Step 1: Login
+			const res = await fetch('/api/login', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ username, password })
+			});
+			const data = await res.json();
+
+			if (data.twofa_required) {
+				tempToken = data.temp_token;
+				document.getElementById('twofa-section').classList.remove('d-none');
+			} else if (data.token) {
+				finalToken = data.token;
+				localStorage.setItem('token', finalToken);
+				window.location.href = '/profile'; // Redirect on success
+			} else {
+				alert(data.error?.[0] || 'Login failed');
+			}
+		} else {
+			// Step 2: Verify 2FA code
+			const res = await fetch('/api/verify-2fa', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ temp_token: tempToken, code })
+			});
+			const data = await res.json();
+
+			if (data.token) {
+				finalToken = data.token;
+				localStorage.setItem('token', finalToken);
+				window.location.href = '/profile';
+			} else {
+				document.getElementById('twofa-error').textContent = data.error?.[0] || 'Invalid 2FA code';
+			}
+		}
+	});
+</script>
+</body>
+</html>

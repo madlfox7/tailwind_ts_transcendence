@@ -1,0 +1,55 @@
+networks:
+  transcendence:
+    driver: bridge
+
+services:
+  nginx:
+    image: nginx
+    container_name: nginx
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - "4343:443"
+    volumes:
+      - ./frontend:/app
+    #  - ./frontend:/usr/share/nginx/html
+    #  - media_volume:/usr/share/nginx/html/media
+    depends_on:
+      - backend
+      - frontend
+    networks:
+      - transcendence
+
+  frontend:
+    image: frontend
+    container_name: frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    restart: always
+    # volumes:
+    #   - ./frontend:/app
+    ports:
+      - "6060:6060"
+    networks:
+      - transcendence
+
+  backend:
+    image: backend
+    container_name: backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: always
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    ports:
+      - "8080:8080"
+      - "5050:5050"
+    networks:
+      - transcendence
+
+volumes:
+  media_volume:
