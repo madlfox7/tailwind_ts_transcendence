@@ -310,3 +310,19 @@
 {"level":30,"time":1746798416126,"pid":17,"hostname":"a189164bc4f2","reqId":"req-3","res":{"statusCode":404},"responseTime":2.117223999928683,"msg":"request completed"}
 {"level":30,"time":1746798418672,"pid":17,"hostname":"a189164bc4f2","reqId":"req-4","req":{"method":"GET","url":"/api/profile","hostname":"localhost","remoteAddress":"172.18.0.4","remotePort":37832},"msg":"incoming request"}
 {"level":30,"time":1746798418672,"pid":17,"hostname":"a189164bc4f2","reqId":"req-4","res":{"statusCode":401},"responseTime":0.3651350000873208,"msg":"request completed"}
+{"level":30,"time":1746908947408,"pid":18,"hostname":"54a5eac7106a","msg":"Server listening at http://0.0.0.0:8080"}
+{"level":30,"time":1746909023952,"pid":18,"hostname":"cb6cd0aed040","msg":"Server listening at http://0.0.0.0:8080"}
+{"level":30,"time":1746909314275,"pid":18,"hostname":"8e5cb6506497","msg":"Server listening at http://0.0.0.0:8080"}
+{"level":30,"time":1746909438517,"pid":18,"hostname":"10a41e894f28","msg":"Server listening at http://0.0.0.0:8080"}
+{"level":30,"time":1746909677551,"pid":17,"hostname":"ed96805d2252","msg":"Server listening at http://0.0.0.0:8080"}
+{"level":30,"time":1746909766587,"pid":18,"hostname":"e43fa674c48c","msg":"Server listening at http://0.0.0.0:8080"}
+{"level":30,"time":1746910207380,"pid":18,"hostname":"5d7d5aa5b89f","msg":"Server listening at http://0.0.0.0:8080"}
+{"level":30,"time":1746910564943,"pid":18,"hostname":"168665b2bbcb","msg":"Server listening at http://0.0.0.0:8080"}
+{"level":30,"time":1746910638303,"pid":18,"hostname":"56067376aeaa","msg":"Server listening at http://0.0.0.0:8080"}
+{"level":30,"time":1746910781690,"pid":18,"hostname":"2aebce793dcc","msg":"Server listening at http://0.0.0.0:8080"}
+{"level":30,"time":1746911001000,"pid":18,"hostname":"83a82c2b51a0","msg":"Server listening at http://0.0.0.0:8080"}
+{"level":30,"time":1746911658517,"pid":18,"hostname":"84155121a94d","msg":"Server listening at http://0.0.0.0:8080"}
+{"level":30,"time":1746911876318,"pid":18,"hostname":"7be97041f727","msg":"Server listening at http://0.0.0.0:8080"}
+{"level":30,"time":1746912142416,"pid":18,"hostname":"043abfa086e8","msg":"Server listening at http://0.0.0.0:8080"}
+{"level":30,"time":1746912561583,"pid":18,"hostname":"662748c62168","msg":"Server listening at http://0.0.0.0:8080"}
+{"level":30,"time":1746912664691,"pid":18,"hostname":"b4a55afc502d","msg":"Server listening at http://0.0.0.0:8080"}

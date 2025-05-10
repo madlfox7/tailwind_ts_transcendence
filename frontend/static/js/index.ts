@@ -1,5 +1,4 @@
-// // ------------------------------- IMPORT VIEWS -------------------------------
-// // A view is a class containing the HTML and JS of a page
+
 // import Home from "./views/Home.js";
 // import Pong from "./views/Pong.js";
 // import Pong3d from "./views/Pong3d.js";
@@ -26,122 +25,90 @@
 // import { attachEventListenersToLinks } from "./utils/utils.js";
 
 // // ------------------------------- CONFIGURE GLOBAL VARIABLES -------------------------------
-// export const BASE_URL = ""//"https://refactored-space-spork-7j54jp4g4wq3rg4x-443.app.github.dev:443";
-// export const BIG_TEXT = '20px';
-// export const DEFAULT_TEXT = '16px';
+// export const BASE_URL: string = "";
+// export const BIG_TEXT: string = '20px';
+// export const DEFAULT_TEXT: string = '16px';
+// export const ids: Record<string, number> = {};
 
-// // Store interval IDs (to be able to clear them later)
-// export const ids = {};
+// interface View {
+//     getHtml: () => Promise<string>;
+//     loadJS: () => void;
+//     stopJS: () => void;
+//     cleanUpEventListeners: () => void;
+// }
 
 // // Store the current view
-// let view = null;
+// let view: View | null = null;
 
 // // ------------------------------- THE APP STARTS HERE -------------------------------
-// // When the DOM is loaded, call initialization functions and the router function
 // document.addEventListener("DOMContentLoaded", async () => {
-// 	// Initialization
 // 	initLoadTransition();
 // 	initInteractiveBubble();
 // 	await applySettings();
-
-// 	// Load the view
 // 	router();
 // });
 
 // // ------------------------------- ROUTING -------------------------------
-// // Array that contains all routes where each route has a path and a view
-// const routes = [
+// const routes: { path: string, view: new () => View }[] = [
 // 	{ path: "/", view: Home },
-// 	{ path: "/pong", view: Pong },
-// 	{ path: "/pong3d", view: Pong3d },
-// 	{ path: "/pongMenu", view: PongMenu },
-// 	{ path: "/pacman", view: Pacman },
-// 	{ path: "/pacmanMenu", view: PacmanMenu },
-// 	{ path: "/settings", view: Settings },
-// 	{ path: "/games", view: Games },
-// 	{ path: "/profile", view: Profile },
-// 	{ path: "/signin", view: SignIn },
-// 	{ path: "/signup", view: SignUp },
-// 	{ path: "/edit-profile", view: EditProfile },
-// 	{ path: "/friends", view: Friends },
-// 	{ path: "/pong-statistics", view: PongStatistics },
-// 	{ path: "/pacman-statistics", view: PacmanStatistics }
+// 	// { path: "/pong", view: Pong },
+// 	// { path: "/pong3d", view: Pong3d },
+// 	// { path: "/pongMenu", view: PongMenu },
+// 	// { path: "/pacman", view: Pacman },
+// 	// { path: "/pacmanMenu", view: PacmanMenu },
+// 	// { path: "/settings", view: Settings },
+// 	// { path: "/games", view: Games },
+// 	// { path: "/profile", view: Profile },
+// 	// { path: "/signin", view: SignIn },
+// 	// { path: "/signup", view: SignUp },
+// 	// { path: "/edit-profile", view: EditProfile },
+// 	// { path: "/friends", view: Friends },
+// 	// { path: "/pong-statistics", view: PongStatistics },
+// 	// { path: "/pacman-statistics", view: PacmanStatistics },
 // ];
+// const router = async (): Promise<void> => {
+//     let match = routes.find(route => route.path === location.pathname);
 
-// // Loads the view (HTML and JS) in the div with the id "app" according to the current path
-// const router = async () => {
-// 	// Test if the current path is in the routes array
-// 	let match = routes.find(route => route.path === location.pathname);
-	
-// 	// If the current path is not in the routes array, set the match to the NotFound view
 //     if (!match) {
-// 		match = { path: "", view: NotFound };
+//         match = { path: "", view: NotFound };
 //     }
 
-// 	// If there's an old view, clean it up
 //     if (view) {
 //         view.cleanUpEventListeners();
 //         view.stopJS();
 
-// 		const modals = document.querySelectorAll('.modal.show');
-// 		modals.forEach(modal => {
-// 			const modalInstance = bootstrap.Modal.getInstance(modal);
-// 			modalInstance.hide();
-// 		});
+//         // Tailwind equivalent of hiding modals (if needed)
+//         const modals = document.querySelectorAll('.modal.show');
+//         modals.forEach(modal => {
+//             modal.classList.remove('show');
+//         });
 //     }
-	
-// 	// Create a new instance of the view
+
 //     view = new match.view();
-	
-// 	// Load the HTML of the view in the app div
-// 	const appDiv = document.querySelector("#app");
-//     appDiv.innerHTML = await view.getHtml();
-
-// 	// Load the JS of the view
-// 	view.loadJS();
-
-// 	// Overwrite the default behavior of the links to not reload the page
-// 	attachEventListenersToLinks();
-
-// 	// Initialize with default language
-// 	updateTexts();
-
-// 	// Animate letters
-// 	animateLetters();
+//     const appDiv = document.querySelector("#app");
+//     if (appDiv) {
+//         appDiv.innerHTML = await view.getHtml();
+//         view.loadJS();
+//         attachEventListenersToLinks();
+//         updateTexts();
+//         animateLetters();
+//     }
 // };
+
 
 // // ------------------------------- NAVIGATION -------------------------------
-// // Navigate to a new view
-// export const navigateTo = url => {
-// 	// Change the URL to the new URL and add a state to the history stack
-//     history.pushState(null, null, url);
-
-// 	// Update the view
-//     router();
+// export const navigateTo = (url: string): void => {
+// 	history.pushState(null, "", url);
+// 	router();
 // };
 
-// // Listen for the popstate event (back and forward buttons) and call the router function
 // window.addEventListener("popstate", router);
 // ------------------------------- IMPORT VIEWS -------------------------------
 import Home from "./views/Home.js";
-import Pong from "./views/Pong.js";
-import Pong3d from "./views/Pong3d.js";
-import PongMenu from "./views/PongMenu.js";
-import Settings from "./views/Settings.js";
-import Pacman from "./views/Pacman.js";
-import PacmanMenu from "./views/PacmanMenu.js";
 import NotFound from "./views/NotFound.js";
-import Games from "./views/Games.js";
-import Profile from "./views/Profile.js";
-import SignIn from "./views/SignIn.js";
-import SignUp from "./views/SignUp.js";
-import EditProfile from "./views/EditProfile.js";
-import Friends from "./views/Friends.js";
-import PongStatistics from "./views/PongStatistics.js";
-import PacmanStatistics from "./views/PacmanStatistics.js";
 
 // ------------------------------- IMPORT VISUAL EFFECTS -------------------------------
-import { animateLetters, initLoadTransition, initInteractiveBubble } from './visual/effects.js'
+import { animateLetters, initLoadTransition, initInteractiveBubble } from './visual/effects.js';
 
 // ------------------------------- IMPORT UTILS ---------------------------------
 import { updateTexts } from "./utils/languages.js";
@@ -161,10 +128,85 @@ interface View {
     cleanUpEventListeners: () => void;
 }
 
-// Store the current view
+// ------------------------------- ROUTES -------------------------------
+const routes: { path: string, view: new () => View }[] = [
+	{ path: "/", view: Home },
+	{ path: "/404", view: NotFound }
+];
+
+// ------------------------------- GLOBAL VIEW REFERENCE -------------------------------
 let view: View | null = null;
 
-// ------------------------------- THE APP STARTS HERE -------------------------------
+//
+// ============================== TAILWIND REFRESH ==============================
+//
+function refreshTailwind() {
+    const elements = document.querySelectorAll("#app *");
+    elements.forEach((el) => {
+        const currentClasses = el.className;
+        el.className = currentClasses;
+    });
+}
+
+//
+// ============================== MODAL CLEANUP ==============================
+//
+function hideModals() {
+    const modals = document.querySelectorAll('.modal.show');
+    modals.forEach(modal => {
+        modal.classList.remove('show');
+    });
+}
+
+//
+// ============================== ROUTER LOGIC ==============================
+//
+const router = async (): Promise<void> => {
+    let match = routes.find(route => route.path === location.pathname);
+
+    // ✅ 404 Fallback
+    if (!match) {
+        console.warn(`Route not found: ${location.pathname}`);
+        match = { path: "/404", view: NotFound };
+    }
+
+    // ✅ Cleanup existing view if it exists
+    if (view) {
+        view.cleanUpEventListeners();
+        view.stopJS();
+        hideModals();
+    }
+
+    // ✅ Instantiate the new view
+    view = new match.view();
+
+    // ✅ Find the #app container and inject HTML
+    const appDiv = document.querySelector("#app");
+    if (appDiv) {
+        appDiv.innerHTML = await view.getHtml();
+
+        // ✅ Load scripts and event listeners
+        view.loadJS();
+        attachEventListenersToLinks();
+        updateTexts();
+        animateLetters();
+
+        // ✅ Refresh Tailwind
+        refreshTailwind();
+    }
+};
+
+//
+// ============================== NAVIGATION FUNCTION ==============================
+//
+export const navigateTo = (url: string): void => {
+	history.pushState(null, "", url);
+	router();
+};
+
+//
+// ============================== PAGE LOAD LISTENER ==============================
+//
 document.addEventListener("DOMContentLoaded", async () => {
 	initLoadTransition();
 	initInteractiveBubble();
@@ -172,59 +214,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 	router();
 });
 
-// ------------------------------- ROUTING -------------------------------
-const routes: { path: string, view: new () => View }[] = [
-	{ path: "/", view: Home },
-	{ path: "/pong", view: Pong },
-	{ path: "/pong3d", view: Pong3d },
-	{ path: "/pongMenu", view: PongMenu },
-	{ path: "/pacman", view: Pacman },
-	{ path: "/pacmanMenu", view: PacmanMenu },
-	{ path: "/settings", view: Settings },
-	{ path: "/games", view: Games },
-	{ path: "/profile", view: Profile },
-	{ path: "/signin", view: SignIn },
-	{ path: "/signup", view: SignUp },
-	{ path: "/edit-profile", view: EditProfile },
-	{ path: "/friends", view: Friends },
-	{ path: "/pong-statistics", view: PongStatistics },
-	{ path: "/pacman-statistics", view: PacmanStatistics },
-];
-
-const router = async (): Promise<void> => {
-	let match = routes.find(route => route.path === location.pathname);
-
-	if (!match) {
-		match = { path: "", view: NotFound };
-	}
-
-	if (view) {
-		view.cleanUpEventListeners();
-		view.stopJS();
-
-		const modals = document.querySelectorAll('.modal.show');
-		modals.forEach(modal => {
-			const modalInstance = (window as any).bootstrap?.Modal.getInstance(modal);
-			if (modalInstance) modalInstance.hide();
-		});
-	}
-
-	view = new match.view();
-
-	const appDiv = document.querySelector("#app");
-	if (appDiv) {
-		appDiv.innerHTML = await view.getHtml();
-		view.loadJS();
-		attachEventListenersToLinks();
-		updateTexts();
-		animateLetters();
-	}
-};
-
-// ------------------------------- NAVIGATION -------------------------------
-export const navigateTo = (url: string): void => {
-	history.pushState(null, "", url);
-	router();
-};
-
+//
+// ============================== POPSTATE LISTENER ==============================
+//
 window.addEventListener("popstate", router);

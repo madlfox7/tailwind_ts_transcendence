@@ -1,23 +1,29 @@
-<div class="full-height d-flex flex-column align-items-center justify-content-center container">
-	<div class="row justify-content-center mb-5">
-		<div class="col-12 text-center">
-			<h1 class="text-white display-1 fw-bold title" animated-letters>satori</h1>
-		</div>
-	</div>
-	<div class="row justify-content-center mb-3">
-		<div class="col-12 text-center">
-			<a role="button" class="btn btn-lg text-light fixed-width-btn-lg" href="/games" data-link data-translate="play">play</a>
-		</div>
-	</div>
-	<div class="row justify-content-center mb-3">
-		<div class="col-12 text-center">
-			<a id="profile-button" role="button" class="btn btn-lg text-light fixed-width-btn-lg" href="/profile" data-link data-translate="profile">profile</a>
-		</div>
-	</div>
-	<div class="row justify-content-center mb-3">
-		<div class="col-12 text-center">
-			<a role="button" class="btn btn-lg text-light fixed-width-btn-lg" href="/settings" data-link data-translate="settings">settings</a>
-		</div>
-	</div>
+<!-- home.html -->
+<div class="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-gray-800 via-gray-900 to-black space-y-10 p-10">
+  
+  <!-- Title with custom colors and effects -->
+  <h1 class="bg-gradient-to-r from-yellow-500 via-red-500 to-pink-500 text-transparent bg-clip-text p-6 text-7xl font-extrabold tracking-wider rounded-lg shadow-lg transform hover:scale-105 transition duration-300 ease-in-out">
+    satori
+  </h1>
+
+  <!-- Buttons with Tailwind Styles -->
+  <a role="button" href="/games" data-link data-translate="play"
+     class="bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 text-white text-lg font-semibold py-3 px-10 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
+    Play
+  </a>
+
+  <a role="button" id="profile-button" href="/profile" data-link data-translate="profile"
+     class="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white text-lg font-semibold py-3 px-10 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
+    Profile
+  </a>
+
+  <a role="button" href="/settings" data-link data-translate="settings"
+     class="bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white text-lg font-semibold py-3 px-10 rounded-lg shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
+    Settings
+  </a>
+
+  <a href="https://github.com/erzloh/ft_transcendence"
+     class="text-center text-md text-gray-200 hover:text-gray-100 mt-5 underline decoration-dotted hover:decoration-solid transition duration-200 ease-in-out">
+    credits
+  </a>
 </div>
-<a href="https://github.com/erzloh/ft_transcendence" class="credits text-center" data-translate="credits">credits</a>

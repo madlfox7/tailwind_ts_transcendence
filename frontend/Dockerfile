@@ -9,13 +9,13 @@ COPY . .
 
 # Install dependencies
 RUN npm install && \
-    npm install bootstrap typescript sass && \
+    npm install typescript sass tailwindcss && \
     npm install -g http-server
 
 # Compile SCSS and TS at build time
-RUN  npx tsc --project tsconfig.json
+RUN npx tsc --project tsconfig.json
 
-# Compile Tailwind CSS
+# 🟢 Compile Tailwind CSS (Local build instead of CDN)
 RUN npx tailwindcss -i ./static/css/input.css -o ./static/css/output.css --minify
 
 # Expose frontend dev port
