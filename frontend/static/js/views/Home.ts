@@ -52,8 +52,8 @@
 // 
 // 
 
-import AbstractView from "./AbstractView.js";
-import { refreshTailwind } from "../refreshTailwind.js"; // Import the utility function
+ import AbstractView from "./AbstractView.js";
+// import { refreshTailwind } from "../refreshTailwind.js"; // Import the utility function
 
 export default class HomeView extends AbstractView {
   constructor() {
@@ -72,7 +72,7 @@ export default class HomeView extends AbstractView {
     }
 
     // 3️⃣ Force Tailwind to re-render the styles
-    refreshTailwind();
+    // refreshTailwind();
 
     // 4️⃣ Return the HTML content as a string (router expects a string)
     return pageContent;
