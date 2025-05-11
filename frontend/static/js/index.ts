@@ -106,6 +106,7 @@
 // ------------------------------- IMPORT VIEWS -------------------------------
 import Home from "./views/Home.js";
 import NotFound from "./views/NotFound.js";
+import Pong from "./views/Pong.js";
 
 // ------------------------------- IMPORT VISUAL EFFECTS -------------------------------
 import { animateLetters, initLoadTransition, initInteractiveBubble } from './visual/effects.js';
@@ -131,7 +132,8 @@ interface View {
 // ------------------------------- ROUTES -------------------------------
 const routes: { path: string, view: new () => View }[] = [
 	{ path: "/", view: Home },
-	{ path: "/404", view: NotFound }
+	{ path: "/404", view: NotFound },
+    { path: "/pong", view: Pong }
 ];
 
 // ------------------------------- GLOBAL VIEW REFERENCE -------------------------------
